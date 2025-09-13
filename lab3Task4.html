@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Перегляд зображень</title>
+  <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        img { max-width: 500px; height: auto; margin-bottom: 15px; border: 2px solid #333; border-radius: 8px; }
+        button {
+          padding: 10px 20px;
+          font-size: 18px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .btn-prev { background: #66a3ff; color: white; }
+        .btn-prev:hover { background: #005ce6; }
+        .btn-next { background: #4CAF50; color: white; }
+        .btn-next:hover { background: #2e7d32; }
+  </style>
+</head>
+<body>
+
+    <a href="lab3.html">Головна</a><br>
+
+    <h2>Переглядач зображень</h2>
+
+    <img id="viewer" src="" alt="Зображення">
+
+    <div>
+      <button class="btn-prev" onclick="prevImage()">Назад</button>
+      <button class="btn-next" onclick="nextImage()">Вперед</button>
+    </div>
+
+    <script>
+
+      let images = [
+        "images/img1.jpg",
+        "images/img2.jpg",
+        "images/img3.jpg",
+        "images/img4.jpg",
+        "images/img5.jpg"
+      ];
+
+      let currentIndex = 0;
+
+      const viewer = document.getElementById("viewer");
+
+      function showImage(index) {
+        viewer.src = images[index];
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+      }
+
+      showImage(currentIndex);
+    </script>
+
+</body>
+</html>

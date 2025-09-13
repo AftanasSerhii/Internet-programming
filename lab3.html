@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="index.html">Головна</a>
+    <a href="lab3Task2.html">Завдання2</a><br>
+    <a href="lab3Task4.html">Завдання4</a><br>
+
+    <h2>Розрахунок площі квадрата</h2>
+
+    <label for="side">Довжина сторони a:</label><br>
+    <input type="number" id="side" placeholder="Введіть довжину сторони" min="0"><br>
+
+    <div id="result">Площа: —</div>
+
+    <script>
+      const sideInput = document.getElementById("side");
+      const resultDiv = document.getElementById("result");
+
+      sideInput.addEventListener("input", function() {
+        let a = parseFloat(sideInput.value);
+
+        if (!isNaN(a) && a >= 0) {
+          let area = a * a;
+          resultDiv.textContent = "Площа квадрата: " + area;
+        } else {
+          resultDiv.textContent = "Площа: —";
+        }
+      });
+    </script>
+
+
+</body>
+</html>
