@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+   
+        var product = new Array(3);
+
+        product = ["Скотч", "Серветки", "Стікер"];
+        var quantity = ["100", "200", "400"];
+        var cost = ["35", "40", "20"];
+        
+        var products = document.getElementsByName("products");
+
+        function fun1() {
+            let products = document.getElementById("products");
+            let selected = products.value;
+            let resultField = document.getElementById("result");
+
+            let found = false;
+
+            for (let i = 0; i < product.length; i++) {
+              if (selected === product[i]) {
+                resultField.value = product[i] + " - " + "Кількість: " + quantity[i] + ", Ціна: " + cost[i]; 
+                found = true; 
+                break;
+              }
+            }
+        
+            if (!found) {
+              resultField.value = "Товар не знайдено";
+            }
+        }
+
+        function fun2() {
+            let products = document.getElementById("products");
+            let selected = products.value;
+            let output = document.getElementById("sumOfProduct");
+            let resultField = document.getElementById("result");
+
+            let found = false;
+
+            for (let i = 0; i < product.length; i++) {
+              if (selected === product[i]) {
+                output.innerHTML = "Добуток наявної кількості товару на складі і вартості одиниці товару: " + quantity[i] * cost[i];
+                found = true;
+                break;
+              }
+            }
+        
+            if (!found) {
+              resultField.value = "Товар не знайдено";
+            }
+        }
+    </script>
+</head>
+<body>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="lab1.html">Головна</a>
+    </div>
+    
+
+    <form id="main_form">
+    <label for="products">Оберіть товар:</label><br /><br />
+    <select name="products" id="products">
+      <option value="Скотч">Скотч</option>
+      <option value="Серветки">Серветки</option>
+      <option value="Стікер">Стікер</option>
+    </select>
+    <br /><br />
+
+    <input type="button" value="Наявна кількість і вартість" onclick="fun1();"/>
+    <input type="button" value="Загальна сума" onclick="fun2();" /><br/><br/>
+
+    <input type="text" size="70" id="result" />
+  </form>
+
+    <p id="sumOfProduct"></p>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script language="JavaScript">
+        function calculation() {
+            let x= 5;
+            let y= 2;
+            
+            let result = 1 - Math.pow(x,2) / Math.pow(y,3);
+            
+            alert(result);
+        }
+
+        function fun(a)
+        {
+            main_form.t_res.value = a;
+        }
+        function fun1(a)
+        {
+            main_form.t_res2.value = a;
+        }
+
+        function fun2()
+        {
+            let x, y, result;
+            x = parseInt(second_form.t_x.value);
+            y = parseInt(second_form.t_y.value);
+            
+            if(x < 10 || y > 3) 
+            {
+                result = Math.pow(x, 2) + Math.pow(y, 2);
+            }
+            else if(x > 2) 
+            {
+                result = x - y + Math.pow(x, 2);
+            }
+            else 
+            {
+                result = Math.pow(x, 3) + 3 * x * y;
+            }
+
+            second_form.t_res.value = "" + result;
+        }
+
+        function factorial(n) {
+
+            if (n === 0 || n === 1) return 1;
+
+            let result = 1;
+
+            for (let i = 2; i <= n; i++) {
+              result *= i;
+            }
+            return result;
+        }
+
+        function fun3(){
+
+            let x, y, sum = 0;
+
+            x = parseInt(third_form.t_x.value)
+            y = parseInt(third_form.t_y.value)
+
+            for (let i = 7; i <= 11; i++) {
+              sum += Math.pow(-1, i) * ( (x + y - factorial(i)) / factorial(i - 1) );
+            }
+
+            third_form.t_c.value = "" + sum;
+        }
+
+
+    </script>
+
+</head>
+<body onLoad = "fun('Відбулось завантаження сторінки');">
+
+    <a href="index.html">Головна</a>
+
+    <h3> Завдання 1.</H3>
+    
+    <p> Це звичайний HTML абзац.</p>
+    
+    <script language="JavaScript">
+        document.write("Привіт! Мене звати Сергій, студент групи ІПЗ-21")
+    </script>
+    
+    <p>Знову звичайний HTML абзац.</p>
+    
+    <form>
+        <input type="button" value="Click me" onClick="alert('Я народився 05.04.2000 року в місті Бурштин ')">
+    </form>
+
+    <h3> Завдання 2.</H3>
+
+    <form>
+        <input type="button" value="Calculate" onClick="calculation()">
+    </form>
+
+    <h3> Завдання 3.</H3>
+
+    <form id = "main_form">
+        
+        <input type="text" size = "100" value="onClick" onclick ="fun('Відбувся клік на текстовому елементі форми');"><br>
+
+        <input type = "text" size = "100" id = "t_res">
+
+        <p>onFocus </p>
+
+        <input type="text" size = "100" value="onFocus" onselect = "fun1('В текстовому полі форми виділений текст');"><br>
+
+        <input type = "text" size = "100" id = "t_res2"><br>
+
+    </form>
+
+    <h3> Завдання 4.</h3>
+
+    <form id = "second_form">
+        x<input type="text" id = "t_x" value="5"><br><br>
+        y<input type="text" id = "t_y" value="5"><br><br>
+        Result: <input type="text" id = "t_res" value=""><br><br>
+
+        <input type = "button" onClick = "fun2();" value = "Розрахувати">
+    </form>
+
+    <h3> Завдання 5.</h3>
+
+    <form id = "third_form">
+        x = <input type="text" id = "t_x" value="10"><br><br> 
+        y = <input type="text" id = "t_y" value="-2"><br><br>
+        Результат: <input type="text" id = "t_c" value=""><br><br>
+
+        <input type = "button" onClick = "fun3();" value = "Розрахувати">
+    </form>
+
+    <h3> Завдання 6.</h3>
+
+    <a href="lab1SecondPage.html">Завдання 6</a>
+
+</body>
+</html>
