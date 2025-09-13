@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Матриця A[i,j]</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; }
+      table { border-collapse: collapse; margin-top: 15px; }
+      td, th {
+        border: 1px solid #333;
+        padding: 6px 10px;
+        text-align: center;
+      }
+      input { margin: 5px; }
+    </style>
+</head>
+<body>
+    <a href="lab2.html">Головна</a>
+
+
+    <h2>Генерація матриці A[i,j] = 11·i + j</h2>
+
+    <label>Кількість рядків: 
+      <input type="number" id="rows" min="1" value="3">
+    </label><br>
+    <label>Кількість стовпців: 
+      <input type="number" id="cols" min="1" value="4">
+    </label><br>
+    <button onclick="generateTable()">Створити таблицю</button>
+
+    <div id="matrix"></div>
+    <p id="result"></p>
+
+    <script>
+      function generateTable() {
+        const rows = parseInt(document.getElementById("rows").value);
+        const cols = parseInt(document.getElementById("cols").value);
+        const container = document.getElementById("matrix");
+        container.innerHTML = "";
+
+        let table = document.createElement("table");
+        let sum = 0;
+
+        for (let i = 1; i <= rows; i++) {
+          let tr = document.createElement("tr");
+          for (let j = 1; j <= cols; j++) {
+            let val = 11 * i + j;
+            sum += val;
+
+            let td = document.createElement("td");
+            td.textContent = val;
+            tr.appendChild(td);
+          }
+          table.appendChild(tr);
+        }
+
+        container.appendChild(table);
+
+        // Варіант 1: сума всіх елементів
+        document.getElementById("result").textContent =
+          "Сума всіх елементів матриці: " + sum;
+      }
+    </script>
+</body>
+</html>

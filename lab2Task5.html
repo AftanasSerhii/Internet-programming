@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Дослідження методів console.*</title>
+</head>
+<body>
+    <a href="lab2.html">Головна</a><br>
+
+    <h3>Відкрийте Console (F12 → Console), щоб переглянути роботу методів</h3>
+
+    <script>
+        
+        let obj = { name: "Іван", age: 21, skills: ["JS", "HTML", "CSS"] };
+
+        console.info("Це інформаційне повідомлення (console.info)");
+
+        console.warn("Увага! Це попередження (console.warn)");
+
+        console.error("Сталася помилка! (console.error)");
+
+        console.dir(obj);
+
+        console.dirxml(document.body);
+
+        console.time("Таймер");
+        let sum = 0;
+        for (let i = 0; i < 1_000_000; i++) {
+          sum += i;
+        }
+        console.timeEnd("Таймер");
+
+        console.profile("Профілювання циклу");
+        for (let i = 0; i < 100_000; i++) {
+          Math.sqrt(i);
+        }
+        console.profileEnd("Профілювання циклу");
+
+        let x = 10;
+        console.assert(x > 20, "Помилка: x не більше 20");
+        console.assert(x === 10, "Це повідомлення не з'явиться, бо умова істинна");
+
+    </script>
+</body>
+</html>

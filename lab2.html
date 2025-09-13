@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="index.html">Головна</a><br>
+    <a href="lab2Task2.html">Завдання2</a><br>
+    <a href="lab2Task3.html">Завдання3</a><br>
+    <a href="lab2Task4.html">Завдання4</a><br>
+    <a href="lab2Task5.html">Завдання5</a><br><br>
+      
+    <div>
+      <label for="formattedClock">Час (формат year#moun#day-hour#min#sec):</label><br>
+      <input id="formattedClock" type="text" readonly />
+    </div>
+  
+    <script>
+      const out = document.getElementById('formattedClock');
+    
+      function pad2(n) {
+        return String(n).padStart(2, '0');
+      }
+    
+      function updateClock() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = pad2(now.getMonth() + 1);
+        const day = pad2(now.getDate());
+        const hour = pad2(now.getHours());
+        const min = pad2(now.getMinutes());
+        const sec = pad2(now.getSeconds());
+        
+        const formatted = `${year}:${month}:${day} - ${hour}:${min}:${sec}`;
+        out.value = formatted;
+      }
+    
+      // Оновлюємо щосекунди
+      updateClock();
+      setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
