@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Арифметична вікторина</title>
+</head>
+<body>
+
+    <a href="lab3.html">Головна</a><br>
+
+    <h2>Арифметична вікторина</h2>
+
+    <div class="task" id="task">Натисніть «Наступне завдання»</div><br>
+
+    <input type="number" id="answer" placeholder="Ваша відповідь"><br><br>
+    <button onclick="checkAnswer()">Перевірити</button>
+    <button onclick="nextTask()">Наступне завдання</button>
+
+    <div id="result"></div>
+    <div id="score"></div>
+
+    <script>
+      let num1, num2, operator, correctAnswer;
+      let totalQuestions = 5;
+      let currentQuestion = 0;
+      let correctCount = 0;
+
+      function generateTask() {
+
+        num1 = Math.floor(Math.random() * 10);
+        num2 = Math.floor(Math.random() * 10);
+        let operators = ["+", "-", "*", "/"];
+        operator = operators[Math.floor(Math.random() * operators.length)];
+
+        if (operator === "/" && num2 === 0) {
+          num2 = 1;
+        }
+
+        correctAnswer = eval(num1 + operator + num2);
+
+        if (operator === "/") {
+          correctAnswer = parseFloat(correctAnswer.toFixed(2));
+        }
+
+        document.getElementById("task").innerText = num1 + " " + operator + " " + num2 + " = ?";
+        document.getElementById("answer").value = "";
+        document.getElementById("result").innerText = "";
+      }
+
+      function checkAnswer() {
+        let userAnswer = document.getElementById("answer").value;
+
+        if (userAnswer === "") {
+          alert("Введіть відповідь!");
+          return;
+        }
+
+        if (parseFloat(userAnswer) === correctAnswer) {
+          document.getElementById("result").innerText = "Правильно!";
+          correctCount++;
+        } else {
+          document.getElementById("result").innerText =
+            "Помилка, правильна відповідь: " + correctAnswer;
+        }
+
+        document.getElementById("score").innerText =
+          "Рахунок: " + correctCount + " / " + (currentQuestion + 1);
+      }
+
+      function nextTask() {
+        if (currentQuestion >= totalQuestions) {
+          document.getElementById("task").innerText =
+            "Тест завершено! Ваш результат: " + correctCount + " із " + totalQuestions;
+          document.getElementById("answer").disabled = true;
+          return;
+        }
+
+        generateTask();
+        currentQuestion++;
+        document.getElementById("score").innerText =
+          "Рахунок: " + correctCount + " / " + currentQuestion;
+      }
+    </script>
+
+</body>
+</html>

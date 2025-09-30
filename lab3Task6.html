@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Дерево ієрархії</title>
+</head>
+<body>
+  
+    <a href="lab3.html">Головна</a><br>
+
+    <h2>Дерево ієрархії</h2>
+    <div id="treeContainer"></div>
+
+    <script>
+
+      const data = [
+        {
+          name: "Розділ 1",
+          children: [
+            { name: "Підрозділ 1.1", children: [
+                  { name: "Тема 1.1.1" },
+                  { name: "Тема 1.1.2" }
+              ]
+            },
+            { name: "Підрозділ 1.2", children: [
+                  { name: "Тема 1.2.1" },
+                  { name: "Тема 1.2.2" }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Розділ 2",
+          children: [
+            { name: "Підрозділ 2.1" },
+            { name: "Підрозділ 2.2", children: [
+                  { name: "Тема 2.2.1" },
+                  { name: "Тема 2.2.2" }
+              ]
+            }
+          ]
+        }
+      ];
+
+      const container = document.getElementById("treeContainer");
+
+      function buildTree(nodes) {
+        const ul = document.createElement("ul");
+
+        nodes.forEach(node => {
+          const li = document.createElement("li");
+
+          if (node.children && node.children.length > 0) {
+            const toggle = document.createElement("a");
+            toggle.href = "#";
+            toggle.textContent = "[+] " + node.name;
+
+            const childUl = buildTree(node.children);
+            childUl.style.display = "none";
+
+            toggle.addEventListener("click", function(e) {
+              e.preventDefault();
+              if (childUl.style.display === "none") {
+                childUl.style.display = "block";
+                toggle.textContent = "[-] " + node.name;
+              } else {
+                childUl.style.display = "none";
+                toggle.textContent = "[+] " + node.name;
+              }
+            });
+
+            li.appendChild(toggle);
+            li.appendChild(childUl);
+          } else {
+            li.textContent = node.name;
+          }
+
+          ul.appendChild(li);
+        });
+
+        return ul;
+      }
+
+      container.appendChild(buildTree(data));
+    </script>
+</body>
+</html>

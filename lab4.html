@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестування</title>
+</head>
+<body>
+
+    <a href="index.html">Головна</a><br>
+
+    <h2>Онлайн-тестування</h2>
+    <form id="quizForm">
+
+        <p>1. Столиця України:</p>
+        <label><input type="radio" name="q1" value="1"> Київ</label><br>
+        <label><input type="radio" name="q1" value="0"> Львів</label><br>
+        <label><input type="radio" name="q1" value="0"> Харків</label><br>
+        <label><input type="radio" name="q1" value="0"> Одеса</label><br>
+
+        <p>2. 2 + 2 = ?</p>
+        <label><input type="radio" name="q2" value="0"> 3</label><br>
+        <label><input type="radio" name="q2" value="1"> 4</label><br>
+        <label><input type="radio" name="q2" value="0"> 5</label><br>
+        <label><input type="radio" name="q2" value="0"> 6</label><br>
+
+        <p>3. Які з наведених — мови програмування? (2 правильні)</p>
+        <label><input type="checkbox" name="q3" value="1"> Python</label><br>
+        <label><input type="checkbox" name="q3" value="1"> Java</label><br>
+        <label><input type="checkbox" name="q3" value="0"> HTML</label><br>
+        <label><input type="checkbox" name="q3" value="0"> CSS</label><br>
+
+        <p>4. Які тварини є ссавцями? (2 правильні)</p>
+        <label><input type="checkbox" name="q4" value="1"> Собака</label><br>
+        <label><input type="checkbox" name="q4" value="1"> Кіт</label><br>
+        <label><input type="checkbox" name="q4" value="0"> Крокодил</label><br>
+        <label><input type="checkbox" name="q4" value="0"> Черепаха</label><br>
+
+        <p>5. Найбільша планета Сонячної системи:</p>
+        <select name="q5">
+          <option value="0">Венера</option>
+          <option value="0">Земля</option>
+          <option value="1">Юпітер</option>
+          <option value="0">Марс</option>
+        </select>
+
+        <p>6. Виберіть кольори прапора України (2 правильні)</p>
+        <select name="q6" multiple size="4">
+            <option value="1">Синій</option>
+            <option value="1">Жовтий</option>
+            <option value="0">Зелений</option>
+            <option value="0">Червоний</option>
+        </select>
+
+        <p>7. Напишіть рік проголошення Незалежності України:</p>
+        <input type="text" name="q7">
+        <br><br>
+        <button type="button" onclick="checkQuiz()">Завершити тестування</button>
+    </form>
+
+    <h3>Результати:</h3>
+    <div id="results"></div>
+
+<script>
+    function checkQuiz() {
+        let total = 0;
+        let resultsHTML = "<table border='1' cellpadding='5'><tr><th>Питання</th><th>Відповідь</th><th>Бал</th></tr>";
+        
+        let q1 = document.querySelector('input[name="q1"]:checked');
+        let res1 = q1 ? parseInt(q1.value) : 0;
+        resultsHTML += `<tr><td>1</td><td>${q1 ? q1.nextSibling.textContent.trim() : "-"}</td><td>${res1}</td></tr>`;
+        total += res1;
+        
+        let q2 = document.querySelector('input[name="q2"]:checked');
+        let res2 = q2 ? parseInt(q2.value) : 0;
+        resultsHTML += `<tr><td>2</td><td>${q2 ? q2.nextSibling.textContent.trim() : "-"}</td><td>${res2}</td></tr>`;
+        total += res2;
+        
+        let q3 = document.querySelectorAll('input[name="q3"]:checked');
+        let vals3 = Array.from(q3).map(el => parseInt(el.value));
+        let sum3 = vals3.reduce((a,b)=>a+b,0);
+        let res3 = (q3.length === 2) ? sum3 : 0;
+        resultsHTML += `<tr><td>3</td><td>${Array.from(q3).map(el=>el.nextSibling.textContent.trim()).join(", ") || "-"}</td><td>${res3}</td></tr>`;
+        total += res3;
+        
+        let q4 = document.querySelectorAll('input[name="q4"]:checked');
+        let vals4 = Array.from(q4).map(el => parseInt(el.value));
+        let sum4 = vals4.reduce((a,b)=>a+b,0);
+        let res4 = (q4.length === 2) ? sum4 : 0;
+        resultsHTML += `<tr><td>4</td><td>${Array.from(q4).map(el=>el.nextSibling.textContent.trim()).join(", ") || "-"}</td><td>${res4}</td></tr>`;
+        total += res4;
+        
+        let q5 = document.querySelector('select[name="q5"]');
+        let sel5 = q5.options[q5.selectedIndex];
+        let res5 = parseInt(sel5.value);
+        resultsHTML += `<tr><td>5</td><td>${sel5.text}</td><td>${res5}</td></tr>`;
+        total += res5;
+        
+        let q6 = document.querySelector('select[name="q6"]');
+        let selected6 = Array.from(q6.selectedOptions);
+        let vals6 = selected6.map(o => parseInt(o.value));
+        let sum6 = vals6.reduce((a,b)=>a+b,0);
+        let res6 = (selected6.length === 2) ? sum6 : 0;
+        resultsHTML += `<tr><td>6</td><td>${selected6.map(o=>o.text).join(", ") || "-"}</td><td>${res6}</td></tr>`;
+        total += res6;
+        
+        let q7 = document.querySelector('input[name="q7"]').value.trim();
+        let res7 = (q7 === "1991") ? 1 : 0;
+        resultsHTML += `<tr><td>7</td><td>${q7 || "-"}</td><td>${res7}</td></tr>`;
+        total += res7;
+        
+        resultsHTML += `</table><p><b>Загальний бал: ${total}</b></p>`;
+        document.getElementById("results").innerHTML = resultsHTML;
+    }
+</script>
+</body>
+</html>
