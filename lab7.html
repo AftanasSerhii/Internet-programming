@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Робота з рядками</title>
+</head>
+<body>
+    <a href="index.html">Головна</a><br>
+
+    <h2>Робота з рядками</h2>
+
+    <h3>Завдання 1: Знайти довжину рядка</h3>
+    <input type="text" id="input1" placeholder="Введіть рядок">
+    <button onclick="showLength()">Обчислити довжину</button>
+    <p id="result1"></p>
+
+    <h3>Завдання 2: Перетворення регістру</h3>
+    <input type="text" id="input2" placeholder="Введіть рядок">
+    <button onclick="showUpper()">У верхній регістр</button>
+    <button onclick="showLower()">У нижній регістр</button>
+    <p id="result2"></p>
+
+    <h3>Завдання 3: Індекс першого входження символу</h3>
+    <input type="text" id="input3" placeholder="Введіть рядок">
+    <input type="text" id="charInput3" placeholder="Введіть символ">
+    <button onclick="findCharIndex()">Знайти індекс</button>
+    <p id="result3"></p>
+
+    <h3>Завдання 4: Кількість входжень символу</h3>
+    <input type="text" id="input4" placeholder="Введіть рядок">
+    <input type="text" id="charInput4" placeholder="Введіть символ">
+    <button onclick="countChar()">Порахувати входження</button>
+    <p id="result4"></p>
+
+    <h3>Завдання 5: Обмін сусідніх символів</h3>
+    <input type="text" id="input5" placeholder="Введіть рядок">
+    <button onclick="swapPairs()">Обміняти символи</button>
+    <p id="result5"></p>
+
+    <h3>Завдання 6: Перевірка на спам</h3>
+    <input type="text" id="input6" placeholder="Введіть рядок">
+    <button onclick="checkSpam()">Перевірити</button>
+    <p id="result6"></p>
+
+    <h3>Завдання 7: Скорочення рядка</h3>
+    <input type="text" id="input7" placeholder="Введіть рядок">
+    <input type="number" id="maxLength" placeholder="Максимальна довжина">
+    <button onclick="truncateText()">Скоротити</button>
+    <p id="result7"></p>
+
+    <h3>Завдання 8: Видалення голосних</h3>
+    <input type="text" id="task8" placeholder="Введіть рядок">
+    <button onclick="removeVowels()">Видалити голосні</button>
+    <p id="result8"></p>
+
+    <h3>Завдання 9: Заміна "JavaScript" на "JS"</h3>
+    <input type="text" id="input9" placeholder='Введіть рядок, наприклад: "I love JavaScript"'>
+    <button onclick="replaceJS()">Замінити</button>
+    <p id="result9"></p>
+
+    <h3>Завдання 10: Перевірка наявності паліндромного підрядка (мінімум 3 символи)</h3>
+    <input type="text" id="input1" placeholder='Введіть рядок, наприклад: "abcbad"'>
+    <button onclick="hasPalindromeSubstring()">Перевірити</button>
+    <p id="result1"></p>
+
+    <script>
+        function stringLength(str) {
+            return str.length;
+        }
+
+        function showLength() {
+            let input = document.getElementById("input1").value;
+            document.getElementById("result1").innerHTML =
+                "Довжина рядка: " + stringLength(input);
+        }
+
+        function toUpper(str) {
+            return str.toUpperCase();
+        }
+
+        function toLower(str) {
+            return str.toLowerCase();
+        }
+
+        function showUpper() {
+            let input = document.getElementById("input2").value;
+            document.getElementById("result2").innerHTML =
+                "Верхній регістр: " + toUpper(input);
+        }
+
+        function showLower() {
+            let input = document.getElementById("input2").value;
+            document.getElementById("result2").innerHTML =
+                "Нижній регістр: " + toLower(input);
+        }
+
+        function findCharIndex() {
+            let input = document.getElementById("input3").value;
+            let char = document.getElementById("charInput3").value;
+            let index = input.indexOf(char);
+            document.getElementById("result3").innerHTML =
+                "Індекс першого входження: " + index;
+        }
+
+        function countChar() {
+            let input = document.getElementById("input4").value;
+            let char = document.getElementById("charInput4").value;
+            let count = 0;
+            for (let c of input) {
+                if (c === char) count++;
+            }
+            document.getElementById("result4").innerHTML =
+                "Кількість входжень: " + count;
+        }
+
+        function swapPairs() {
+            let input = document.getElementById("input5").value;
+            let result = "";
+            for (let i = 0; i < input.length; i += 2) {
+                if (i + 1 < input.length) {
+                    result += input[i + 1] + input[i];
+                } else {
+                    result += input[i];
+                }
+            }
+            document.getElementById("result5").innerHTML =
+                "Результат: " + result;
+        }
+
+        function checkSpam() {
+            let input = document.getElementById("input6").value.toLowerCase();
+            let spamWords = ["100% безкоштовно", "збільшення продажів", "тільки сьогодні", "не видаляйте"];
+            let isSpam = spamWords.some(word => input.includes(word));
+            document.getElementById("result6").innerHTML =
+                "Спам: " + (isSpam ? "так" : "ні");
+        }
+
+        function truncateText() {
+            let input = document.getElementById("input7").value;
+            let maxLen = parseInt(document.getElementById("maxLength").value);
+            let result = input;
+            if (input.length > maxLen) {
+                result = input.slice(0, maxLen) + "...";
+            }
+            document.getElementById("result7").innerHTML =
+                "Скорочений рядок: " + result;
+        }
+
+        function removeVowels() {
+            let str = document.getElementById("task8").value;
+            let result = str.replace(/[aeiouаеєиіїоуюяAEIOUАЕЄИІЇОУЮЯ]/g, "");
+            document.getElementById("result8").innerText = result;
+        }
+
+        function replaceJS() {
+            let str = document.getElementById("input9").value;
+            let result = str.replace(/JavaScript/g, "JS");
+            document.getElementById("result9").innerText = result;
+        }
+
+        function isPalindrome(str) {
+            return str === str.split("").reverse().join("");
+        }
+
+        function hasPalindromeSubstring() {
+            let str = document.getElementById("input10").value;
+            let found = false;
+            for (let i = 0; i < str.length; i++) {
+                for (let j = i + 3; j <= str.length; j++) {
+                    let sub = str.slice(i, j);
+                    if (isPalindrome(sub)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+            document.getElementById("result10").innerText = found;
+        }
+
+    </script>
+</body>
+</html>
