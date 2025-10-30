@@ -60,7 +60,7 @@
 
     <h3>Завдання 10: Перевірка наявності паліндромного підрядка (мінімум 3 символи)</h3>
     <input type="text" id="input10" placeholder='Введіть рядок, наприклад: "abcbad"'>
-    <button onclick="hasPalindromeSubstring()">Перевірити</button>
+    <button onclick="findPalindromeSubstring()">Перевірити</button>
     <p id="result10"></p>
 
     <script>
@@ -162,20 +162,21 @@
             return str === str.split("").reverse().join("");
         }
 
-        function hasPalindromeSubstring() {
+        function findPalindromeSubstring() {
             let str = document.getElementById("input10").value;
-            let found = false;
+            let palindrome = "";
             for (let i = 0; i < str.length; i++) {
-                for (let j = i + 3; j <= str.length; j++) {
+                for (let j = i + 4; j <= str.length; j++) {
                     let sub = str.slice(i, j);
                     if (isPalindrome(sub)) {
-                        found = true;
+                        palindrome = sub;
                         break;
                     }
                 }
-                if (found) break;
+                if (palindrome) break;
             }
-            document.getElementById("result10").innerText = found;
+            document.getElementById("result10").innerText =
+                palindrome ? "Знайдено паліндром: " + palindrome : "Паліндром не знайдено";
         }
 
     </script>
