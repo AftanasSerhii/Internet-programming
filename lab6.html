@@ -1,11 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Перевірка форми</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 30px;
+      }
+      form {
+        width: 350px;
+        margin: auto;
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 6px;
+        margin-top: 4px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+      }
+      .valid {
+        border-color: green;
+        color: green;
+      }
+      .invalid {
+        border-color: red;
+        color: red;
+      }
+      .msg {
+        font-size: 13px;
+        color: red;
+      }
+      .ok {
+        color: green;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <form id="myForm" onsubmit="return validateForm()">
+      <label>E-mail:</label>
+      <input type="text" id="email" />
+      <span id="emailMsg"></span><br />
+
+      <label>Ім’я та прізвище:</label>
+      <input type="text" id="fullname" />
+      <span id="fullnameMsg"></span><br />
+
+      <label>Логін:</label>
+      <input type="text" id="login" />
+      <span id="loginMsg"></span><br />
+
+      <label>Пароль:</label>
+      <input type="password" id="password" />
+      <span id="passwordMsg"></span><br />
+
+      <label>Поштовий індекс:</label>
+      <input type="text" id="index" />
+      <span id="indexMsg"></span><br /><br />
+
+      <input type="submit" value="Перевірити" />
+    </form>
+
+    <script>
+      let s = "dwbyu@mail.ua";
+      let r = /^([a-z0-9]+)(\.[a-z0-9]+)*@([a-z0-9]+)(\.[a-z0-9]+)*$/i;
+      let a = s.match(r);
+
+      for (i = 0; i < a.length; i++) {
+        console.log("<hr> a[" + i + "] " + a[i]);
+      }
+
+      function validateForm() {
+        let ok = true;
+        const email = document.getElementById("email");
+        const emailMsg = document.getElementById("emailMsg");
+        const emailRegex = /^[a-z0-9._%+-]+@cnu\.edu\.ua$/i;
+
+        if (emailRegex.test(email.value)) {
+          email.style.borderColor = "green";
+        } else {
+          email.style.borderColor = "red";
+          email.style.color = "red";
+          emailMsg.textContent = "має бути name@pnu.edu.ua";
+          ok = false;
+        }
+
+        const fullname = document.getElementById("fullname");
+        const fullnameMsg = document.getElementById("fullnameMsg");
+        const fullnameRegex = /^[A-ZА-ЯІЇЄ][a-zа-яіїє']+\s[A-ZА-ЯІЇЄ]+$/;
+        if (fullnameRegex.test(fullname.value)) {
+          fullname.style.borderColor = "green";
+        } else {
+          fullname.style.borderColor = "red";
+          fullname.style.color = "red";
+          fullnameMsg.textContent = "Ім’я велика+малі, прізвище великі";
+          ok = false;
+        }
+
+        const login = document.getElementById("login");
+        const loginMsg = document.getElementById("loginMsg");
+        const loginRegex = /^[A-Za-z]+$/;
+        if (loginRegex.test(login.value)) {
+          login.style.borderColor = "green";
+        } else {
+          login.style.borderColor = "red";
+          login.style.color = "red";
+          loginMsg.textContent = "Лише латиниця";
+          ok = false;
+        }
+
+        const password = document.getElementById("password");
+        const passwordMsg = document.getElementById("passwordMsg");
+        const passwordRegex =
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[_\-!@#$%^&*])[A-Za-z\d_\-!@#$%^&*]{8,}$/;
+        if (passwordRegex.test(password.value)) {
+          password.style.borderColor = "green";
+        } else {
+          password.style.borderColor = "red";
+          password.style.color = "red";
+          passwordMsg.textContent = "мін.8 символів, літера, цифра, спецсимвол";
+          ok = false;
+        }
+
+        const index = document.getElementById("index");
+        const indexMsg = document.getElementById("indexMsg");
+        const indexRegex = /^\d{5}$/;
+        if (indexRegex.test(index.value)) {
+          index.style.borderColor = "green";
+        } else {
+          index.style.borderColor = "red";
+          index.style.color = "red";
+          indexMsg.textContent = "5 цифр";
+          ok = false;
+        }
+
+        return false;
+      }
+    </script>
+  </body>
 </html>
