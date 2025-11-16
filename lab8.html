@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Завдання</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 20px;
+      }
+      .task {
+        border: 1px solid #aaa;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 6px;
+      }
+      button {
+        margin-top: 8px;
+      }
+      .result {
+        font-weight: bold;
+        margin-top: 10px;
+        color: #003399;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Виконання завдань</h1>
+
+    <a href="index.html">Головна</a><br>
+
+    <div class="task">
+      <h2>Завдання 1</h2>
+
+      <button onclick="showTime()">1.1 Показати поточний час</button>
+      <div id="timeResult" class="result"></div>
+
+      <p>1.2 Введіть кількість секунд:</p>
+      <input type="number" id="secInput" />
+      <button onclick="changeTime()">Змінити час</button>
+      <div id="changedTime" class="result"></div>
+    </div>
+
+    <div class="task">
+      <h2>Завдання 2.1</h2>
+      <button onclick="showDateInfo()">Виконати</button>
+      <div id="dateInfo" class="result"></div>
+    </div>
+
+    <div class="task">
+      <h2>Завдання 2.2</h2>
+      Рік: <input type="number" id="yearInput" /> Місяць:
+      <input type="number" id="monthInput" />
+      <button onclick="getLastDay()">Дізнатись</button>
+      <div id="lastDayResult" class="result"></div>
+    </div>
+
+    <div class="task">
+      <h2>Завдання 2.3</h2>
+      <button onclick="secondsInfo()">Порахувати</button>
+      <div id="secondsInfo" class="result"></div>
+    </div>
+
+    <div class="task">
+      <h2>Завдання 3–5</h2>
+      <button onclick="testClasses()">Запустити</button>
+      <div id="classResult" class="result"></div>
+    </div>
+
+    <div class="task">
+      <h2>Завдання 6 — Варіант 3</h2>
+
+      <p>Ширина:</p>
+      <input type="number" id="rectWidth" />
+
+      <p>Висота:</p>
+      <input type="number" id="rectHeight" />
+
+      <button onclick="showRectangleInfo()">Показати інформацію</button>
+      <button onclick="clearFields()">Очистити поля</button>
+
+      <div id="rectResult" class="result"></div>
+    </div>
+
+    <script>
+      let timeObj = {
+        hours: new Date().getHours(),
+        minutes: new Date().getMinutes(),
+        seconds: new Date().getSeconds(),
+      };
+
+      function showTime() {
+        document.getElementById(
+          "timeResult"
+        ).textContent = `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}`;
+      }
+
+      function changeTime() {
+        let addSec = Number(document.getElementById("secInput").value);
+        let date = new Date();
+        date.setHours(timeObj.hours, timeObj.minutes, timeObj.seconds);
+        date.setSeconds(date.getSeconds() + addSec);
+        timeObj.hours = date.getHours();
+        timeObj.minutes = date.getMinutes();
+        timeObj.seconds = date.getSeconds();
+        document.getElementById(
+          "changedTime"
+        ).textContent = `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}`;
+      }
+
+      function showDateInfo() {
+        let d = new Date();
+        const months = [
+          "січня",
+          "лютого",
+          "березня",
+          "квітня",
+          "травня",
+          "червня",
+          "липня",
+          "серпня",
+          "вересня",
+          "жовтня",
+          "листопада",
+          "грудня",
+        ];
+        const days = [
+          "неділя",
+          "понеділок",
+          "вівторок",
+          "середа",
+          "четвер",
+          "п’ятниця",
+          "субота",
+        ];
+        document.getElementById("dateInfo").innerHTML = `Дата: ${d.getDate()} ${
+          months[d.getMonth()]
+        } ${d.getFullYear()} року<br>
+         День тижня: ${days[d.getDay()]}<br>
+         Час: ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`;
+      }
+
+      function getLastDay() {
+        let y = Number(document.getElementById("yearInput").value);
+        let m = Number(document.getElementById("monthInput").value);
+        let last = new Date(y, m, 0).getDate();
+        document.getElementById(
+          "lastDayResult"
+        ).textContent = `Останній день: ${last}`;
+      }
+
+      function secondsInfo() {
+        let now = new Date();
+        let passed =
+          now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+        let total = 86400;
+        document.getElementById(
+          "secondsInfo"
+        ).textContent = `Пройшло: ${passed}, залишилось: ${total - passed}`;
+      }
+
+      class Car {
+        constructor(brand, model, year) {
+          this.brand = brand;
+          this.model = model;
+          this.year = year;
+        }
+        info() {
+          return `Авто: ${this.brand} ${this.model}, ${this.year} року.`;
+        }
+      }
+
+      class ElectricCar extends Car {
+        constructor(brand, model, year, battery) {
+          super(brand, model, year);
+          this.battery = battery;
+        }
+        charge() {
+          return `${this.brand} ${this.model} заряджається... Батарея: ${this.battery} kWh`;
+        }
+      }
+
+      class MathHelper {
+        static add(a, b) {
+          return a + b;
+        }
+      }
+
+      function testClasses() {
+        const car1 = new Car("Toyota", "Camry", 2020);
+        const tesla = new ElectricCar("Tesla", "Model 3", 2022, 75);
+        document.getElementById(
+          "classResult"
+        ).innerHTML = `${car1.info()}<br>${tesla.info()}<br>${tesla.charge()}<br>5+7=${MathHelper.add(
+          5,
+          7
+        )}`;
+      }
+
+      class Rectangle {
+        constructor(width, height) {
+          this.width = width;
+          this.height = height;
+        }
+        getArea() {
+          return this.width * this.height;
+        }
+        getPerimeter() {
+          return 2 * (this.width + this.height);
+        }
+      }
+
+      class Square extends Rectangle {
+        static message = "Це квадрат (всі сторони рівні)";
+        constructor(side) {
+          super(side, side);
+        }
+      }
+
+      function showRectangleInfo() {
+        let w = Number(document.getElementById("rectWidth").value);
+        let h = Number(document.getElementById("rectHeight").value);
+        if (w <= 0 || h <= 0) {
+          document.getElementById("rectResult").textContent =
+            "Помилка: введіть додатні числа.";
+          return;
+        }
+        let obj;
+        if (w === h) {
+          obj = new Square(w);
+          document.getElementById("rectResult").innerHTML = `${
+            Square.message
+          }<br>Площа: ${obj.getArea()}<br>Периметр: ${obj.getPerimeter()}`;
+        } else {
+          obj = new Rectangle(w, h);
+          document.getElementById(
+            "rectResult"
+          ).innerHTML = `Прямокутник<br>Площа: ${obj.getArea()}<br>Периметр: ${obj.getPerimeter()}`;
+        }
+      }
+
+      function clearFields() {
+        document.getElementById("rectWidth").value = "";
+        document.getElementById("rectHeight").value = "";
+        document.getElementById("rectResult").textContent = "";
+      }
+    </script>
+  </body>
+</html>

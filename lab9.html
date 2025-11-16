@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://js.cx/libs/animate.js"></script>
+
+    <style>
+      body {
+        background: #0d1117;
+        color: white;
+        font-family: Arial;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+        gap: 25px;
+      }
+
+      #path {
+        width: 540px;
+        height: 20px;
+        border: 1px solid #666;
+        position: relative;
+      }
+
+      #brick {
+        width: 40px;
+        height: 20px;
+        background: #ee6b47;
+        position: absolute;
+        cursor: pointer;
+      }
+
+      textarea {
+        width: 540px;
+        height: 100px;
+        background: #161b22;
+        color: white;
+        padding: 10px;
+        border: 1px solid #444;
+      }
+
+      #logoContainer {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        cursor: pointer;
+      }
+
+      .circle {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border: 4px solid #58a6ff;
+        border-radius: 50%;
+        top: 90px;
+        left: 90px;
+      }
+
+      .square {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        border: 4px solid #ffb347;
+        top: 115px;
+        left: 115px;
+      }
+
+      .triangle {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 40px solid transparent;
+        border-right: 40px solid transparent;
+        border-bottom: 70px solid #f7768e;
+        top: 95px;
+        left: 130px;
+        opacity: 0;
+      }
+
+      .text {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: -40px;
+        font-size: 18px;
+        opacity: 0;
+        letter-spacing: 2px;
+      }
+
+      .animateCircle {
+        animation: spin 3s linear infinite,
+          resize 2s ease-in-out infinite alternate;
+      }
+
+      .animateSquare {
+        animation: move 2s ease-in-out infinite alternate,
+          resize2 2s ease-in-out infinite alternate;
+      }
+
+      .animateTriangle {
+        animation: appear 0.8s forwards, pulse 2s linear infinite;
+      }
+
+      .fadeIn {
+        animation: fadeText 1.5s forwards;
+      }
+
+      .fadeOut {
+        animation: hideText 1s forwards;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes move {
+        0% {
+          transform: translateX(-50px);
+        }
+        100% {
+          transform: translateX(50px);
+        }
+      }
+
+      @keyframes resize {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.3);
+        }
+      }
+
+      @keyframes resize2 {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(0.75);
+        }
+      }
+
+      @keyframes appear {
+        0% {
+          opacity: 0;
+          transform: scale(0.4);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(15px);
+        }
+      }
+
+      @keyframes fadeText {
+        0% {
+          opacity: 0;
+          letter-spacing: 6px;
+        }
+        100% {
+          opacity: 1;
+          letter-spacing: 2px;
+        }
+      }
+
+      @keyframes hideText {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Завдання 1</h2>
+
+    <div id="path">
+      <div id="brick"></div>
+    </div>
+
+    <textarea id="textExample">
+He took his vorpal sword in hand:
+Long time the manxome foe he sought—
+So rested he by the Tumtum tree,
+And stood awhile in thought.
+  </textarea
+    >
+
+    <button onclick="animateTyping(textExample)">Старт набору тексту</button>
+
+    <h2>Завдання 2</h2>
+
+    <div id="logoContainer">
+      <div class="circle" id="circle"></div>
+      <div class="square" id="square"></div>
+      <div class="text" id="text"></div>
+    </div>
+
+    <script>
+      let active = false;
+      let logoText = "ІНЖЕНЕРІЯ ПРОГРАМНОГО ЗАБЕЗПЕЧЕННЯ";
+
+      function showLogoText() {
+        let t = document.getElementById("text");
+        t.innerHTML = "";
+        t.classList.remove("fadeOut");
+        t.classList.add("fadeIn");
+        let i = 0;
+        let interval = setInterval(() => {
+          t.innerHTML += logoText[i];
+          i++;
+          if (i >= logoText.length) clearInterval(interval);
+        }, 50);
+      }
+
+      function hideLogoText() {
+        let t = document.getElementById("text");
+        t.classList.remove("fadeIn");
+        t.classList.add("fadeOut");
+      }
+
+      document.getElementById("logoContainer").onclick = () => {
+        let c = circle,
+          s = square;
+        if (!active) {
+          c.classList.add("animateCircle");
+          s.classList.add("animateSquare");
+          showLogoText();
+        } else {
+          c.classList.remove("animateCircle");
+          s.classList.remove("animateSquare");
+          hideLogoText();
+        }
+        active = !active;
+      };
+
+      brick.onclick = function () {
+        animate({
+          duration: 2500,
+          timing: function (timeFraction) {
+            for (let a = 0, b = 1; ; a += b, b /= 2) {
+              if (timeFraction >= (7 - 4 * a) / 11) {
+                return (
+                  -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + b * b
+                );
+              }
+            }
+          },
+          draw: function (progress) {
+            brick.style.left = progress * 500 + "px";
+          },
+        });
+      };
+
+      function animateTyping(textArea) {
+        let text = textArea.value;
+        let length = text.length;
+        animate({
+          duration: 4000,
+          timing: function (timeFraction) {
+            for (let a = 0, b = 1; ; a += b, b /= 2) {
+              if (timeFraction >= (7 - 4 * a) / 11) {
+                return (
+                  -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + b * b
+                );
+              }
+            }
+          },
+          draw: function (progress) {
+            textArea.value = text.slice(0, Math.ceil(length * progress));
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
