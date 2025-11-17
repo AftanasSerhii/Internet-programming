@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+      .hovered {
+        background-color: #ffe0b3;
+        border: 2px solid orange;
+        transition: 0.3s;
+      }
+
+      #hover_block {
+        width: 200px;
+        height: 100px;
+        background: #ddd;
+        margin-top: 20px;
+        padding: 10px;
+      }
+
+      .activeDiv {
+        border: 3px solid red;
+        background: #ffdddd;
+      }
+
+      #img {
+        width: 200px;
+        cursor: pointer;
+        display: none;
+      }
+
+      #tooltip {
+        display: none;
+        position: absolute;
+        background: #000;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+    </style>
+
+    <script>
+      $(document).ready(function () {
+        $("p:first").text("DOM first!");
+        $("p:last").text("DOM last! Введіть в текстове поле слово 'correct'.");
+
+        $("#hover_block").hover(
+          function () {
+            $(this).addClass("hovered");
+          },
+          function () {
+            $(this).removeClass("hovered");
+          }
+        );
+
+        $("#hover_block").bind("click", function () {
+          $(this).addClass("activeDiv");
+        });
+
+        $("#hover_block").bind("dblclick", function () {
+          $(this).removeClass("activeDiv");
+        });
+
+        $("#btn1").bind("click", function () {
+          alert("Одинарний клік");
+        });
+
+        $("#btn2").bind("dblclick", function () {
+          alert("Подвійний клік");
+        });
+
+        $("#showImg").click(function () {
+          $("#img").fadeIn(200);
+        });
+
+        $("#img").click(function () {
+          $(this).fadeOut(200);
+        });
+
+        $("#img").mouseover(function (e) {
+          $("#tooltip")
+            .text("Cat")
+            .css({ top: e.pageY + 10, left: e.pageX + 10 })
+            .show();
+        });
+
+        $("#img").mousemove(function (e) {
+          $("#tooltip").css({ top: e.pageY + 10, left: e.pageX + 10 });
+        });
+
+        $("#img").mouseout(function () {
+          $("#tooltip").hide();
+        });
+
+        $("form").submit(function () {
+          if ($("input:first").val() == "correct") {
+            $("span").text("Перевіряєм...").show();
+            return true;
+          }
+          $("span").text("Неправильно!").show().fadeOut(1000);
+          return false;
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>Контент сторінки</h1>
+
+    <p>Початковий текст першого абзацу</p>
+    <p>Інший текст</p>
+    <p>Початковий текст останнього абзацу</p>
+
+    <div id="hover_block">Наведіть на мене мишкою</div>
+
+    <br/>
+
+    <button id="btn1">Кнопка 1</button>
+    <button id="btn2">Кнопка 2</button>
+
+    <br/><br/>
+
+    <p id="showImg" style="cursor:pointer; text-decoration:underline; width:150px;">
+      Показати зображення
+    </p>
+
+    <img id="img" src="images/img1.jpg"/>
+
+    <div id="tooltip"></div>
+
+    <br/><br/>
+
+    <p>Введіть в текстове поле слово 'correct'.</p>
+
+    <form action="javascript:alert('Успішно!');">
+      <div>
+        <input type="text"/>
+        <input type="submit"/>
+      </div>
+    </form>
+
+    <span></span>
+  </body>
+</html>
