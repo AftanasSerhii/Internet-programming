@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Лаб11</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      .block {
+        border: 2px solid black;
+        padding: 10px;
+        margin: 10px;
+      }
+      .highlight {
+        background: yellow;
+      }
+      .modify {
+        color: red;
+        font-weight: bold;
+      }
+      li {
+        margin: 4px 0;
+      }
+      .clone {
+        background: lightgreen;
+        margin-top: 10px;
+      }
+      #box,
+      #box2 {
+        width: 200px;
+        height: 60px;
+        background: lightgray;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Завдання 1</h1>
+
+    <h2 id="title">Початковий заголовок</h2>
+    <div id="box">Тут буде текст</div>
+    <br>
+    <input type="text" id="input" value="Початкове значення" />
+    <button id="run1">Виконати Завдання 1</button>
+
+    <h1>Завдання 2</h1>
+
+    <div id="box2">Текст у блоці</div>
+    <br>
+    <button id="run2">Виконати Завдання 2</button>
+
+    <h1>Завдання 3</h1>
+
+    <div id="container" class="block">
+      Container
+      <div id="parent" class="block">
+        Parent
+        <div id="child" class="block">
+          Child
+          <span id="inner">Inner text</span>
+        </div>
+      </div>
+    </div>
+
+    <button id="btnChildren">children()</button>
+    <button id="btnIs">is()</button>
+    <button id="btnParents">parents()</button>
+    <button id="btnClosest">closest()</button>
+    <button id="btnParentsUntil">parentsUntil()</button>
+
+    <h1>Завдання 4</h1>
+
+    <div class="group">Елемент групи 1</div>
+    <div class="group">Елемент групи 2</div>
+    <div class="group">Елемент групи 3</div>
+
+    <ul id="list">
+      <li>Елемент 1</li>
+      <li>Елемент 2</li>
+      <li>Елемент 3</li>
+      <li>Елемент 4</li>
+      <li>Елемент 5</li>
+      <li>Елемент 6</li>
+    </ul>
+
+    <button id="btnFilterClass">filter(class)</button>
+    <button id="btnFilterThird">filter(3rd li)</button>
+
+    <h1>Завдання 5</h1>
+
+    <button id="btnExtend">$.extend()</button>
+    <button id="btnFnExtend">$.fn.extend()</button>
+    <button id="btnEval">$.globalEval()</button>
+    <button id="btnGrep">$.grep()</button>
+
+    <script>
+      $("#run1").click(function () {
+        $("#box").html("<b>Змінений текст</b>");
+        $("#box").css({
+          background: "yellow",
+          color: "red",
+          "font-size": "20px",
+        });
+        $("#input").val("Нове значення");
+        $("#title").attr("data-info", "hello");
+        $("#title").attr({ title: "Підказка", class: "highlighted" });
+        $("#title").attr("data-length", function () {
+          return $("#title").text().length;
+        });
+        $("#title").removeAttr("class");
+      });
+
+      $("#run2").click(function () {
+        $("#box2").prepend("<b>Додано → </b>");
+        let c = $("#box2").clone().addClass("clone");
+        $("body").append(c);
+        $("#box2").height(function (i, old) {
+          return old + 20;
+        });
+        console.log("outerHeight =", $("#box2").outerHeight());
+      });
+
+      $("#btnChildren").click(function () {
+        $("#parent").children().toggleClass("highlight");
+      });
+
+      $("#btnIs").click(function () {
+        console.log($("#child").is(".block"));
+      });
+
+      $("#btnParents").click(function () {
+        $("#child").parents().toggleClass("highlight");
+      });
+
+      $("#btnClosest").click(function () {
+        $("#inner").closest(".block").toggleClass("highlight");
+      });
+
+      $("#btnParentsUntil").click(function () {
+        $("#child").parentsUntil("#container").toggleClass("highlight");
+      });
+
+      $("#btnFilterClass").click(function () {
+        $(".group").filter(".group").addClass("modify").append(" modify");
+      });
+
+      $("#btnFilterThird").click(function () {
+        $("#list li")
+          .filter(":nth-child(3n)")
+          .addClass("modify")
+          .append(" modify");
+      });
+
+      $("#btnExtend").click(function () {
+        let a = { x: 1 },
+          b = { y: 2 };
+        let r = $.extend({}, a, b);
+        console.log(r);
+      });
+
+      $("#btnFnExtend").click(function () {
+        $.fn.extend({
+          highlight: function () {
+            this.css("background", "pink").append(" modify");
+          },
+        });
+        $(".group").highlight();
+      });
+
+      $("#btnEval").click(function () {
+        $.globalEval("console.log('globalEval виконано')");
+      });
+
+      $("#btnGrep").click(function () {
+        let arr = [1, 2, 3, 4, 5, 6];
+        let r = $.grep(arr, function (x) {
+          return x % 2 === 0;
+        });
+        console.log(r);
+      });
+    </script>
+  </body>
+</html>
+
+
